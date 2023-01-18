@@ -1,9 +1,6 @@
 package usuario;
 
 public class Usuario {
-
-    String name;
-    int points;
-
-
+    String nombre;
+    int puntuacion;
 }
