@@ -7,4 +7,8 @@ public enum Casilla {
 
     public EstadoCasilla estado;
 
+    public String valor;
+
+
+
 }
