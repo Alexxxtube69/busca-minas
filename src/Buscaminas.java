@@ -64,7 +64,7 @@ public class Buscaminas {
                 opcion1 = Integer.parseInt(lector.nextLine());
                 datoInvalido = false;
             } catch (Exception e) {
-                System.out.println("Dato no valido");
+                System.out.println("Dato no valido, introduce un valor valido (numeros).");
             }
         }
 
