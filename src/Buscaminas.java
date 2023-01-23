@@ -51,7 +51,7 @@ public class Buscaminas {
             case 1:
         }
     }
-    
+
 
     public static int mostrarMenu(String menu) {
         Scanner lector = new Scanner(System.in);
