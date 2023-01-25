@@ -43,12 +43,41 @@ public class Buscaminas {
                       
             """;
 
+    static final String menujuego = """
+                      
+            Introduce Un  Nombre De Usuario
+                      
+                      
+            """;
 
     public static void main(String[] args) {
+        Scanner lectoor = new Scanner(System.in);
         int opcion = mostrarMenu(menuPrincipal);
 
-        switch (opcion){
+        switch (opcion) {
             case 1:
+
+
+                break;
+
+
+            case 2:
+
+                System.out.println(menuInformacionJuego);
+
+                break;
+
+            case 3:
+
+                System.out.println(menuCreditos);
+
+                break;
+
+            case 4:
+
+                System.out.println(menuFinal);
+
+                break;
         }
     }
 
@@ -70,4 +99,18 @@ public class Buscaminas {
 
         return opcion1;
     }
+
+    public static void iniciarJuego() {
+
+
+
+
+
+
+
+
+    }
 }
+
+
+
