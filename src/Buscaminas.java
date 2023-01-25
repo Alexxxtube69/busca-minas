@@ -1,3 +1,5 @@
+import tablero.Tablero;
+
 import java.util.Scanner;
 
 public class Buscaminas {
@@ -47,7 +49,7 @@ public class Buscaminas {
                       
             Introduce Un  Nombre De Usuario
                       
-                      
+                      2
             """;
 
     public static void main(String[] args) {
@@ -56,6 +58,19 @@ public class Buscaminas {
 
         switch (opcion) {
             case 1:
+                System.out.println(menuDificultad);
+                opcion = lectoor.nextInt();
+                switch (opcion) {
+                    case 1:
+                        System.out.println("Has ecogido el nivel Facil");
+                        break;
+                    case 2:
+                        System.out.println("Has escogido el nivel Medio");
+                        break;
+                    case 3:
+                        System.out.println("Has escogido el nivel Dificil");
+
+                }
 
 
                 break;
