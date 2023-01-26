@@ -1,3 +1,5 @@
+import tablero.Tablero;
+
 import java.util.Scanner;
 
 public class Buscaminas {
@@ -45,13 +47,13 @@ public class Buscaminas {
 
 
     public static void main(String[] args) {
-        int opcion = mostrarMenu(menuPrincipal);
-
-        switch (opcion){
-            case 1:
-        }
+        final Tablero tablero = new Tablero(10);
+        System.out.println(tablero);
+        int[] cordenadas = pedirCordenadas();
+        tablero.ponerMinas(cordenadas[0], cordenadas[1]);
+        System.out.println(tablero);
     }
-    
+
 
     public static int mostrarMenu(String menu) {
         Scanner lector = new Scanner(System.in);
@@ -69,5 +71,29 @@ public class Buscaminas {
         }
 
         return opcion1;
+    }
+
+    public static int[] pedirCordenadas() {
+        Scanner stdin = new Scanner(System.in);
+        int[] cordenadas = new int[2];
+        boolean datosValidos = false;
+        String[] cordenadasBrutas;
+
+        while (!datosValidos) {
+            System.out.print("Introduce las coordenadas: ");
+            cordenadasBrutas = stdin.nextLine().trim().split(" ");
+            for (int i = 0; i < 2; i ++) {
+                try {
+                    cordenadas[i] = Integer.parseInt(cordenadasBrutas[i]);
+                } catch (Exception e) {
+                    System.out.println("Las cordenadas tienen que ser enteros");
+                    break;
+                }
+
+                datosValidos = true;
+            }
+        }
+
+        return cordenadas;
     }
 }

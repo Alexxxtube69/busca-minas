@@ -1,5 +1,8 @@
 package tablero;
 
+import tablero.excepciones.CasillaMarcadaAlterada;
+import tablero.excepciones.CasillaVisibleAlterada;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -8,23 +11,44 @@ public class Tablero {
 
     public Tablero(int medida) {
         this.matriz = new Casilla[medida][medida];
-        this.llenarMatriz();
+        // Inicializando las casillas
+        for (int i = 0; i < medida; i++) {
+            for (int j = 0; j < medida; j++) {
+                this.matriz[i][j] = Casilla.VACIO;
+            }
+        }
     }
 
-    private void llenarMatriz() {
+    /**
+     * Llena el tablero de minas. Requiere de una posicion inicial
+     * para no poner una mina en esa posicion ya que es el primer
+     * click del jugador.
+     */
+    public void ponerMinas(int longitude, int latitude) {
         // Lo que haremos sera ir fila por fila y poner dos minas por fila
 
         // Iteramos sobre las filas
-        for(Casilla[] fila : this.matriz) {
-            int medidaFila = fila.length;
-            ArrayList posicionesMinas = this.obtenerNumerosAleatorios(2, medidaFila);
+        for(int y = 0; y < this.matriz.length; y ++) {
+            Casilla[] fila = this.matriz[y];
+            ArrayList<Integer> posicionesMinas = this.obtenerNumerosAleatorios(2, fila.length);
 
-            for(int i = 0; i < medidaFila; i ++) {
-                if (posicionesMinas.contains(i)) {
-                    fila[i] = Casilla.MINA;
+            for(int x = 0; x < fila.length; x ++) {
+                if (x == longitude && y == latitude) {
+                    System.out.println("Casilla encontrada");
+                    fila[x] = Casilla.VACIO;
+                    try {
+                        fila[x].setVisible();
+                    } catch(CasillaMarcadaAlterada e) {
+                        System.out.println(e);
+                        System.exit(1);
+                    }
                     continue;
                 }
-                fila[i] = Casilla.VACIO;
+
+                // Poniendo mina en la posicion obtenida aleatoriamente
+                if (posicionesMinas.contains(x)) {
+                    fila[x] = Casilla.MINA;
+                }
             }
         }
     }
@@ -69,7 +93,7 @@ public class Tablero {
 
         for (Casilla[] fila: this.matriz) {
             for (Casilla casilla : fila) {
-                tableroString.append("X");
+                tableroString.append(casilla);
             }
             tableroString.append("\n");
         }
