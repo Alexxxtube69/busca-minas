@@ -45,13 +45,55 @@ public class Buscaminas {
                       
             """;
 
+    static final String menujuego = """
+                      
+            Introduce Un  Nombre De Usuario
+                      
+                      2
+            """;
 
     public static void main(String[] args) {
-        final Tablero tablero = new Tablero(10);
-        System.out.println(tablero);
-        int[] cordenadas = pedirCordenadas();
-        tablero.ponerMinas(cordenadas[0], cordenadas[1]);
-        System.out.println(tablero);
+        Scanner lectoor = new Scanner(System.in);
+        int opcion = mostrarMenu(menuPrincipal);
+
+        switch (opcion) {
+            case 1:
+                System.out.println(menuDificultad);
+                opcion = lectoor.nextInt();
+                switch (opcion) {
+                    case 1:
+                        System.out.println("Has ecogido el nivel Facil");
+                        break;
+                    case 2:
+                        System.out.println("Has escogido el nivel Medio");
+                        break;
+                    case 3:
+                        System.out.println("Has escogido el nivel Dificil");
+
+                }
+
+
+                break;
+
+
+            case 2:
+
+                System.out.println(menuInformacionJuego);
+
+                break;
+
+            case 3:
+
+                System.out.println(menuCreditos);
+
+                break;
+
+            case 4:
+
+                System.out.println(menuFinal);
+
+                break;
+        }
     }
 
 
@@ -66,7 +108,7 @@ public class Buscaminas {
                 opcion1 = Integer.parseInt(lector.nextLine());
                 datoInvalido = false;
             } catch (Exception e) {
-                System.out.println("Dato no valido");
+                System.out.println("Dato no valido, introduce un valor valido (numeros).");
             }
         }
 
@@ -82,7 +124,7 @@ public class Buscaminas {
         while (!datosValidos) {
             System.out.print("Introduce las coordenadas: ");
             cordenadasBrutas = stdin.nextLine().trim().split(" ");
-            for (int i = 0; i < 2; i ++) {
+            for (int i = 0; i < 2; i++) {
                 try {
                     cordenadas[i] = Integer.parseInt(cordenadasBrutas[i]);
                 } catch (Exception e) {
@@ -96,4 +138,21 @@ public class Buscaminas {
 
         return cordenadas;
     }
+    public static void iniciarJuego() {
+
+
+
+            final Tablero tablero = new Tablero(10);
+            System.out.println(tablero);
+            int[] cordenadas = pedirCordenadas();
+            tablero.ponerMinas(cordenadas[0], cordenadas[1]);
+            System.out.println(tablero);
+
+
+
+
+    }
 }
+
+
+
