@@ -3,6 +3,8 @@ package tablero;
 import tablero.casilla.Casilla;
 import tablero.casilla.TipoCasilla;
 import tablero.excepciones.CasillaMarcadaAlterada;
+import tablero.excepciones.CasillaVisibleAlterada;
+import tablero.excepciones.MinaExplotada;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -142,6 +144,19 @@ public class Tablero {
                 casilla.setPista(casilla.getPista() + 1);
             }
         }
+    }
+
+    public void setCasillaVisible(int x, int y) throws CasillaMarcadaAlterada, MinaExplotada {
+        Casilla casilla = this.matriz[y][x];
+        if (casilla.getTipo().equals(TipoCasilla.MINA)) {
+            throw new MinaExplotada();
+        }
+        casilla.setVisible();
+    }
+
+    public void marcarCasilla(int x, int y) throws CasillaVisibleAlterada {
+        Casilla casilla = this.matriz[y][x];
+        casilla.marcar();
     }
 
     public void setVisible() {
