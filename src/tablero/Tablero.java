@@ -29,7 +29,7 @@ public class Tablero {
         // Lo que haremos sera ir fila por fila y poner dos minas por fila
 
         // Iteramos sobre las filas
-        for(int y = 0; y < this.matriz.length; y ++) {
+        for (int y = 0; y < this.matriz.length; y++) {
             Casilla[] fila = this.matriz[y];
             ArrayList<Integer> posicionesMinas = this.obtenerNumerosAleatorios(2, fila.length);
 
@@ -41,7 +41,7 @@ public class Tablero {
                 continue;
             }
 
-            for(int x = 0; x < fila.length; x ++) {
+            for (int x = 0; x < fila.length; x++) {
                 if (x == longitude && y == latitude) {
                     fila[x] = new Casilla(TipoCasilla.VACIO);
                     try {
@@ -54,7 +54,27 @@ public class Tablero {
 
                 // Poniendo mina en la posicion obtenida aleatoriamente
                 if (posicionesMinas.contains(x)) {
+                    int x1 = x - 1;
+                    int y1 = y - 1;
+                    int x2 = x + 1;
+                    int y2 = y + 1;
+
                     fila[x] = new Casilla(TipoCasilla.MINA);
+                    // Poner pistas en las casillas de al rededor
+                    if (y == 0) {
+                        y1 = y;
+                    }
+                    if (x == 0) {
+                        x1 = x;
+                    }
+                    if (y == this.matriz.length - 1) {
+                        y2 = y;
+                    }
+                    if (x == this.matriz.length - 1) {
+                        x2 = x;
+                    }
+
+                    incrementarPistas(x1, y1, x2, y2);
                 }
             }
         }
@@ -66,6 +86,7 @@ public class Tablero {
      * aleatorios sin que estos se repitan no podemos depender de la suerte que tengamos al generar esos numeors
      * y repetir si se repiten. Por eso usamos dos arrays. Uno con los numeros que no se han usado y otro
      * con los numeros que vamos a devolver.
+     *
      * @param cantidad
      * @param max
      * @return Un array con los numeros generados
@@ -93,12 +114,13 @@ public class Tablero {
 
     /**
      * Este metodo devuelve el tablero en forma de String
+     *
      * @return
      */
     public String toString() {
         StringBuilder tableroString = new StringBuilder();
 
-        for (Casilla[] fila: this.matriz) {
+        for (Casilla[] fila : this.matriz) {
             for (Casilla casilla : fila) {
                 tableroString.append(" " + casilla + " ");
             }
@@ -106,5 +128,38 @@ public class Tablero {
         }
 
         return tableroString.toString();
+    }
+
+    private void incrementarPistas(int x1, int y1, int x2, int y2) {
+        for (int y = y1; y <= y2; y++) {
+            for (int x = x1; x <= x2; x++) {
+                Casilla casilla = this.matriz[y][x];
+
+                if (casilla.getTipo().equals(TipoCasilla.MINA)) {
+                    continue;
+                }
+
+                casilla.setPista(casilla.getPista() + 1);
+            }
+        }
+    }
+
+    public void setVisible() {
+        for (Casilla[] fila : this.matriz) {
+            for (int x = 0; x < fila.length; x++) {
+                Casilla casilla = fila[x];
+
+                try {
+                    casilla.setVisible();
+                } catch (CasillaMarcadaAlterada e) {
+                    try {
+                        casilla.desmarcar();
+                    } catch (Exception exception) {
+                        // Si de verdad llegamos aqui podemos irnos a la mierda con tranquilidad
+                        continue;
+                    }
+                }
+            }
+        }
     }
 }

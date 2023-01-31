@@ -13,9 +13,14 @@ public class Casilla {
         this.tipo = tipo;
         this.visible = false;
         this.marcada = false;
+        this.valor = 0;
     }
 
     public void setVisible() throws CasillaMarcadaAlterada {
+        if (this.visible) {
+            return;
+        }
+
         if (this.marcada) {
             throw new CasillaMarcadaAlterada("La casilla esta marcada");
         }
@@ -24,6 +29,10 @@ public class Casilla {
     }
 
     public void setOculto() throws CasillaMarcadaAlterada {
+        if (!this.visible) {
+            return;
+        }
+
         if (this.marcada) {
             throw new CasillaMarcadaAlterada("La casilla esta marcada");
         }
@@ -50,6 +59,14 @@ public class Casilla {
     public void setPista(int valor) {
         this.tipo = TipoCasilla.PISTA;
         this.valor = valor;
+    }
+
+    public int getPista() {
+        return this.valor;
+    }
+
+    public TipoCasilla getTipo() {
+        return this.tipo;
     }
 
     public String toString() {

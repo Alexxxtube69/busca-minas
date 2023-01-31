@@ -63,13 +63,15 @@ public class Buscaminas {
                 switch (opcion) {
                     case 1:
                         System.out.println("Has ecogido el nivel Facil");
-                        iniciarJuego();
+                        iniciarJuego(16);
                         break;
                     case 2:
                         System.out.println("Has escogido el nivel Medio");
+                        iniciarJuego(32);
                         break;
                     case 3:
                         System.out.println("Has escogido el nivel Dificil");
+                        iniciarJuego(48);
                 }
                 break;
             case 2:
@@ -104,9 +106,8 @@ public class Buscaminas {
         return opcion1;
     }
 
-    public static int[] pedirCordenadas() {
+    public static int[] pedirCordenadas(int nCordenadas) {
         Scanner stdin = new Scanner(System.in);
-        int nCordenadas = 2;
         int[] cordenadas = new int[nCordenadas];
         boolean datosValidos = false;
         String cordenadasBrutas;
@@ -125,23 +126,38 @@ public class Buscaminas {
         return cordenadas;
     }
 
-    public static void iniciarJuego() {
-        final Tablero tablero = new Tablero(10);
+    /**
+     * Inicia el tablero
+     */
+    public static void iniciarJuego(int medida) {
+        // Creamos el tablero con el tamaño especificado
+        final Tablero tablero = new Tablero(medida);
         System.out.println(tablero);
 
-        int[] cordenadas = pedirCordenadas();
+
+        int[] cordenadas = pedirCordenadas(2);
+        // Al poner las minas le mandamos las cordenadas iniciales del usuario
+        // Asi nos aseguramos de que no habra ninguna mina en esas cordenadas
         tablero.ponerMinas(cordenadas[0], cordenadas[1]);
+
+        // Mostramos el tablero por pantalla
+        System.out.println(tablero);
+        tablero.setVisible();
         System.out.println(tablero);
     }
 
     public static int[] convertirCoordenadas(String cordenadasTexto, int numCoordenadas) {
+        // Quitamos los posibles espacios con el metodo trim()
+        // Separamos las cordenadas con el metodo split
         String[] cordenadasBrutas = cordenadasTexto.trim().split(" ");
         int[] cordenadas = new int[numCoordenadas];
 
+        // Tratamos de convertir las cordenadas a numeros
         for (int i = 0; i < numCoordenadas; i++) {
                 cordenadas[i] = Integer.parseInt(cordenadasBrutas[i]);
         }
 
+        // Devolvemos las cordenadas convertidas a numeros
         return cordenadas;
     }
 }
