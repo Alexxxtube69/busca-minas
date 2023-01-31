@@ -63,35 +63,24 @@ public class Buscaminas {
                 switch (opcion) {
                     case 1:
                         System.out.println("Has ecogido el nivel Facil");
+                        iniciarJuego();
                         break;
                     case 2:
                         System.out.println("Has escogido el nivel Medio");
                         break;
                     case 3:
                         System.out.println("Has escogido el nivel Dificil");
-
                 }
-
-
                 break;
-
-
             case 2:
-
                 System.out.println(menuInformacionJuego);
-
                 break;
 
             case 3:
-
                 System.out.println(menuCreditos);
-
                 break;
-
             case 4:
-
                 System.out.println(menuFinal);
-
                 break;
         }
     }
@@ -117,40 +106,43 @@ public class Buscaminas {
 
     public static int[] pedirCordenadas() {
         Scanner stdin = new Scanner(System.in);
-        int[] cordenadas = new int[2];
+        int nCordenadas = 2;
+        int[] cordenadas = new int[nCordenadas];
         boolean datosValidos = false;
-        String[] cordenadasBrutas;
+        String cordenadasBrutas;
 
         while (!datosValidos) {
-            System.out.print("Introduce las coordenadas: ");
-            cordenadasBrutas = stdin.nextLine().trim().split(" ");
-            for (int i = 0; i < 2; i++) {
-                try {
-                    cordenadas[i] = Integer.parseInt(cordenadasBrutas[i]);
-                } catch (Exception e) {
-                    System.out.println("Las cordenadas tienen que ser enteros");
-                    break;
-                }
-
+            try {
+                System.out.print("Introduce las cordenadas: ");
+                cordenadasBrutas = stdin.nextLine();
+                cordenadas = convertirCoordenadas(cordenadasBrutas, nCordenadas);
                 datosValidos = true;
+            } catch(Exception e) {
+                System.out.println("Debes introducir dos cordenadas separadas por espacios");
             }
         }
 
         return cordenadas;
     }
+
     public static void iniciarJuego() {
+        final Tablero tablero = new Tablero(10);
+        System.out.println(tablero);
 
+        int[] cordenadas = pedirCordenadas();
+        tablero.ponerMinas(cordenadas[0], cordenadas[1]);
+        System.out.println(tablero);
+    }
 
+    public static int[] convertirCoordenadas(String cordenadasTexto, int numCoordenadas) {
+        String[] cordenadasBrutas = cordenadasTexto.trim().split(" ");
+        int[] cordenadas = new int[numCoordenadas];
 
-            final Tablero tablero = new Tablero(10);
-            System.out.println(tablero);
-            int[] cordenadas = pedirCordenadas();
-            tablero.ponerMinas(cordenadas[0], cordenadas[1]);
-            System.out.println(tablero);
+        for (int i = 0; i < numCoordenadas; i++) {
+                cordenadas[i] = Integer.parseInt(cordenadasBrutas[i]);
+        }
 
-
-
-
+        return cordenadas;
     }
 }
 

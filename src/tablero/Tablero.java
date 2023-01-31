@@ -1,7 +1,8 @@
 package tablero;
 
+import tablero.casilla.Casilla;
+import tablero.casilla.TipoCasilla;
 import tablero.excepciones.CasillaMarcadaAlterada;
-import tablero.excepciones.CasillaVisibleAlterada;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,7 +15,7 @@ public class Tablero {
         // Inicializando las casillas
         for (int i = 0; i < medida; i++) {
             for (int j = 0; j < medida; j++) {
-                this.matriz[i][j] = Casilla.VACIO;
+                this.matriz[i][j] = new Casilla(TipoCasilla.VACIO);
             }
         }
     }
@@ -32,14 +33,20 @@ public class Tablero {
             Casilla[] fila = this.matriz[y];
             ArrayList<Integer> posicionesMinas = this.obtenerNumerosAleatorios(2, fila.length);
 
+            // Si estamos iterando la fila que nos ha dicho el usuario
+            // y ademas en la casilla de esa fila tendria que ir una mina
+            // repetimos esta iteracion del bucle
+            if (posicionesMinas.contains(longitude) && y == latitude) {
+                y--;
+                continue;
+            }
+
             for(int x = 0; x < fila.length; x ++) {
                 if (x == longitude && y == latitude) {
-                    System.out.println("Casilla encontrada");
-                    fila[x] = Casilla.VACIO;
+                    fila[x] = new Casilla(TipoCasilla.VACIO);
                     try {
                         fila[x].setVisible();
-                    } catch(CasillaMarcadaAlterada e) {
-                        System.out.println(e);
+                    } catch (CasillaMarcadaAlterada e) {
                         System.exit(1);
                     }
                     continue;
@@ -47,7 +54,7 @@ public class Tablero {
 
                 // Poniendo mina en la posicion obtenida aleatoriamente
                 if (posicionesMinas.contains(x)) {
-                    fila[x] = Casilla.MINA;
+                    fila[x] = new Casilla(TipoCasilla.MINA);
                 }
             }
         }
@@ -93,7 +100,7 @@ public class Tablero {
 
         for (Casilla[] fila: this.matriz) {
             for (Casilla casilla : fila) {
-                tableroString.append(casilla);
+                tableroString.append(" " + casilla + " ");
             }
             tableroString.append("\n");
         }
