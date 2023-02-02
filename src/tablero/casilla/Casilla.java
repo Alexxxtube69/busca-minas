@@ -70,12 +70,12 @@ public class Casilla {
     }
 
     public String toString() {
-        if (!this.visible) {
-            return "X";
-        }
-
         if (this.marcada) {
             return "-";
+        }
+
+        if (!this.visible) {
+            return "X";
         }
 
         if (this.tipo.equals(TipoCasilla.MINA)) {

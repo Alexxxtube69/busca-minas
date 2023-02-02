@@ -61,36 +61,39 @@ public class Buscaminas {
 
     public static void main(String[] args) {
         Scanner lectoor = new Scanner(System.in);
-        int opcion = mostrarMenu(menuPrincipal);
+        int opcion = 0;
 
-        switch (opcion) {
-            case 1:
-                System.out.println(menuDificultad);
-                opcion = lectoor.nextInt();
-                switch (opcion) {
-                    case 1:
-                        System.out.println("Has ecogido el nivel Facil");
-                        iniciarJuego(16);
-                        break;
-                    case 2:
-                        System.out.println("Has escogido el nivel Medio");
-                        iniciarJuego(32);
-                        break;
-                    case 3:
-                        System.out.println("Has escogido el nivel Dificil");
-                        iniciarJuego(48);
-                }
-                break;
-            case 2:
-                System.out.println(menuInformacionJuego);
-                break;
+        while (opcion != 4) {
+            opcion = mostrarMenu(menuPrincipal);
 
-            case 3:
-                System.out.println(menuCreditos);
-                break;
-            case 4:
-                System.out.println(menuFinal);
-                break;
+            switch (opcion) {
+                case 1:
+                    opcion = mostrarMenu(menuDificultad);
+                    switch (opcion) {
+                        case 1:
+                            System.out.println("Has ecogido el nivel Facil");
+                            iniciarJuego(16);
+                            break;
+                        case 2:
+                            System.out.println("Has escogido el nivel Medio");
+                            iniciarJuego(32);
+                            break;
+                        case 3:
+                            System.out.println("Has escogido el nivel Dificil");
+                            iniciarJuego(48);
+                    }
+                    break;
+                case 2:
+                    System.out.println(menuInformacionJuego);
+                    break;
+
+                case 3:
+                    System.out.println(menuCreditos);
+                    break;
+                case 4:
+                    System.out.println(menuFinal);
+                    break;
+            }
         }
     }
 
